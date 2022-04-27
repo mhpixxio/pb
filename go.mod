@@ -1,4 +1,4 @@
-module pb
+module github.com/mhpixxio/pb
 
 go 1.18
 
