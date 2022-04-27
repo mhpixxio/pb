@@ -1,0 +1,15 @@
+syntax="proto3";
+
+option go_package = "../pb";
+
+message Request {
+  string a = 1;
+}
+
+message Response {
+  string b = 1;
+}
+
+service Texthandler {
+	rpc SayText (Request) returns (Response) {}
+}
