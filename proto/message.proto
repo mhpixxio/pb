@@ -7,11 +7,11 @@ message Textmessage {
 }
 
 message Request {
-  string a = 1;
+  string A = 1;
 }
 
 message Response {
-  string b = 1;
+  string B = 1;
 }
 
 service Texthandler {
