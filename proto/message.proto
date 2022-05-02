@@ -10,8 +10,8 @@ message TextResponse {
   string textres = 1;
 }
 
-service Textservice {
-  rpc textfunc(TextRequest) returns (TextResponse) {}
+service TextService {
+  rpc TextFunc(TextRequest) returns (TextResponse) {}
 }
 
 message BytesRequest {
@@ -22,8 +22,8 @@ message BytesResponse {
   bytes bytesres = 1;
 }
 
-service Bytesservice {
-	rpc bytesfunc(BytesRequest) returns (BytesResponse) {}
+service BytesService {
+	rpc BytesFunc(BytesRequest) returns (BytesResponse) {}
 }
 
 message RandomData {
@@ -48,6 +48,6 @@ message BigDataResponse {
   string bigdatares = 1;
 }
 
-service BigDataservice {
-	rpc bigdatafunc(BigDataRequest) returns (BigDataResponse) {}
+service BigDataService {
+	rpc BigDataFunc(BigDataRequest) returns (BigDataResponse) {}
 }

@@ -18,258 +18,258 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// TextserviceClient is the client API for Textservice service.
+// TextServiceClient is the client API for TextService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TextserviceClient interface {
-	Textfunc(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*TextResponse, error)
+type TextServiceClient interface {
+	TextFunc(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*TextResponse, error)
 }
 
-type textserviceClient struct {
+type textServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTextserviceClient(cc grpc.ClientConnInterface) TextserviceClient {
-	return &textserviceClient{cc}
+func NewTextServiceClient(cc grpc.ClientConnInterface) TextServiceClient {
+	return &textServiceClient{cc}
 }
 
-func (c *textserviceClient) Textfunc(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*TextResponse, error) {
+func (c *textServiceClient) TextFunc(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*TextResponse, error) {
 	out := new(TextResponse)
-	err := c.cc.Invoke(ctx, "/Textservice/textfunc", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/TextService/TextFunc", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TextserviceServer is the server API for Textservice service.
-// All implementations must embed UnimplementedTextserviceServer
+// TextServiceServer is the server API for TextService service.
+// All implementations must embed UnimplementedTextServiceServer
 // for forward compatibility
-type TextserviceServer interface {
-	Textfunc(context.Context, *TextRequest) (*TextResponse, error)
-	mustEmbedUnimplementedTextserviceServer()
+type TextServiceServer interface {
+	TextFunc(context.Context, *TextRequest) (*TextResponse, error)
+	mustEmbedUnimplementedTextServiceServer()
 }
 
-// UnimplementedTextserviceServer must be embedded to have forward compatible implementations.
-type UnimplementedTextserviceServer struct {
+// UnimplementedTextServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedTextServiceServer struct {
 }
 
-func (UnimplementedTextserviceServer) Textfunc(context.Context, *TextRequest) (*TextResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Textfunc not implemented")
+func (UnimplementedTextServiceServer) TextFunc(context.Context, *TextRequest) (*TextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TextFunc not implemented")
 }
-func (UnimplementedTextserviceServer) mustEmbedUnimplementedTextserviceServer() {}
+func (UnimplementedTextServiceServer) mustEmbedUnimplementedTextServiceServer() {}
 
-// UnsafeTextserviceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TextserviceServer will
+// UnsafeTextServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TextServiceServer will
 // result in compilation errors.
-type UnsafeTextserviceServer interface {
-	mustEmbedUnimplementedTextserviceServer()
+type UnsafeTextServiceServer interface {
+	mustEmbedUnimplementedTextServiceServer()
 }
 
-func RegisterTextserviceServer(s grpc.ServiceRegistrar, srv TextserviceServer) {
-	s.RegisterService(&Textservice_ServiceDesc, srv)
+func RegisterTextServiceServer(s grpc.ServiceRegistrar, srv TextServiceServer) {
+	s.RegisterService(&TextService_ServiceDesc, srv)
 }
 
-func _Textservice_Textfunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TextService_TextFunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TextRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TextserviceServer).Textfunc(ctx, in)
+		return srv.(TextServiceServer).TextFunc(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Textservice/textfunc",
+		FullMethod: "/TextService/TextFunc",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TextserviceServer).Textfunc(ctx, req.(*TextRequest))
+		return srv.(TextServiceServer).TextFunc(ctx, req.(*TextRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Textservice_ServiceDesc is the grpc.ServiceDesc for Textservice service.
+// TextService_ServiceDesc is the grpc.ServiceDesc for TextService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Textservice_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Textservice",
-	HandlerType: (*TextserviceServer)(nil),
+var TextService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "TextService",
+	HandlerType: (*TextServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "textfunc",
-			Handler:    _Textservice_Textfunc_Handler,
+			MethodName: "TextFunc",
+			Handler:    _TextService_TextFunc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "message.proto",
 }
 
-// BytesserviceClient is the client API for Bytesservice service.
+// BytesServiceClient is the client API for BytesService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BytesserviceClient interface {
-	Bytesfunc(ctx context.Context, in *BytesRequest, opts ...grpc.CallOption) (*BytesResponse, error)
+type BytesServiceClient interface {
+	BytesFunc(ctx context.Context, in *BytesRequest, opts ...grpc.CallOption) (*BytesResponse, error)
 }
 
-type bytesserviceClient struct {
+type bytesServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBytesserviceClient(cc grpc.ClientConnInterface) BytesserviceClient {
-	return &bytesserviceClient{cc}
+func NewBytesServiceClient(cc grpc.ClientConnInterface) BytesServiceClient {
+	return &bytesServiceClient{cc}
 }
 
-func (c *bytesserviceClient) Bytesfunc(ctx context.Context, in *BytesRequest, opts ...grpc.CallOption) (*BytesResponse, error) {
+func (c *bytesServiceClient) BytesFunc(ctx context.Context, in *BytesRequest, opts ...grpc.CallOption) (*BytesResponse, error) {
 	out := new(BytesResponse)
-	err := c.cc.Invoke(ctx, "/Bytesservice/bytesfunc", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/BytesService/BytesFunc", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BytesserviceServer is the server API for Bytesservice service.
-// All implementations must embed UnimplementedBytesserviceServer
+// BytesServiceServer is the server API for BytesService service.
+// All implementations must embed UnimplementedBytesServiceServer
 // for forward compatibility
-type BytesserviceServer interface {
-	Bytesfunc(context.Context, *BytesRequest) (*BytesResponse, error)
-	mustEmbedUnimplementedBytesserviceServer()
+type BytesServiceServer interface {
+	BytesFunc(context.Context, *BytesRequest) (*BytesResponse, error)
+	mustEmbedUnimplementedBytesServiceServer()
 }
 
-// UnimplementedBytesserviceServer must be embedded to have forward compatible implementations.
-type UnimplementedBytesserviceServer struct {
+// UnimplementedBytesServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedBytesServiceServer struct {
 }
 
-func (UnimplementedBytesserviceServer) Bytesfunc(context.Context, *BytesRequest) (*BytesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Bytesfunc not implemented")
+func (UnimplementedBytesServiceServer) BytesFunc(context.Context, *BytesRequest) (*BytesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BytesFunc not implemented")
 }
-func (UnimplementedBytesserviceServer) mustEmbedUnimplementedBytesserviceServer() {}
+func (UnimplementedBytesServiceServer) mustEmbedUnimplementedBytesServiceServer() {}
 
-// UnsafeBytesserviceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BytesserviceServer will
+// UnsafeBytesServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BytesServiceServer will
 // result in compilation errors.
-type UnsafeBytesserviceServer interface {
-	mustEmbedUnimplementedBytesserviceServer()
+type UnsafeBytesServiceServer interface {
+	mustEmbedUnimplementedBytesServiceServer()
 }
 
-func RegisterBytesserviceServer(s grpc.ServiceRegistrar, srv BytesserviceServer) {
-	s.RegisterService(&Bytesservice_ServiceDesc, srv)
+func RegisterBytesServiceServer(s grpc.ServiceRegistrar, srv BytesServiceServer) {
+	s.RegisterService(&BytesService_ServiceDesc, srv)
 }
 
-func _Bytesservice_Bytesfunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BytesService_BytesFunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BytesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BytesserviceServer).Bytesfunc(ctx, in)
+		return srv.(BytesServiceServer).BytesFunc(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Bytesservice/bytesfunc",
+		FullMethod: "/BytesService/BytesFunc",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BytesserviceServer).Bytesfunc(ctx, req.(*BytesRequest))
+		return srv.(BytesServiceServer).BytesFunc(ctx, req.(*BytesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Bytesservice_ServiceDesc is the grpc.ServiceDesc for Bytesservice service.
+// BytesService_ServiceDesc is the grpc.ServiceDesc for BytesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Bytesservice_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Bytesservice",
-	HandlerType: (*BytesserviceServer)(nil),
+var BytesService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "BytesService",
+	HandlerType: (*BytesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "bytesfunc",
-			Handler:    _Bytesservice_Bytesfunc_Handler,
+			MethodName: "BytesFunc",
+			Handler:    _BytesService_BytesFunc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "message.proto",
 }
 
-// BigDataserviceClient is the client API for BigDataservice service.
+// BigDataServiceClient is the client API for BigDataService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BigDataserviceClient interface {
-	Bigdatafunc(ctx context.Context, in *BigDataRequest, opts ...grpc.CallOption) (*BigDataResponse, error)
+type BigDataServiceClient interface {
+	BigDataFunc(ctx context.Context, in *BigDataRequest, opts ...grpc.CallOption) (*BigDataResponse, error)
 }
 
-type bigDataserviceClient struct {
+type bigDataServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBigDataserviceClient(cc grpc.ClientConnInterface) BigDataserviceClient {
-	return &bigDataserviceClient{cc}
+func NewBigDataServiceClient(cc grpc.ClientConnInterface) BigDataServiceClient {
+	return &bigDataServiceClient{cc}
 }
 
-func (c *bigDataserviceClient) Bigdatafunc(ctx context.Context, in *BigDataRequest, opts ...grpc.CallOption) (*BigDataResponse, error) {
+func (c *bigDataServiceClient) BigDataFunc(ctx context.Context, in *BigDataRequest, opts ...grpc.CallOption) (*BigDataResponse, error) {
 	out := new(BigDataResponse)
-	err := c.cc.Invoke(ctx, "/BigDataservice/bigdatafunc", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/BigDataService/BigDataFunc", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BigDataserviceServer is the server API for BigDataservice service.
-// All implementations must embed UnimplementedBigDataserviceServer
+// BigDataServiceServer is the server API for BigDataService service.
+// All implementations must embed UnimplementedBigDataServiceServer
 // for forward compatibility
-type BigDataserviceServer interface {
-	Bigdatafunc(context.Context, *BigDataRequest) (*BigDataResponse, error)
-	mustEmbedUnimplementedBigDataserviceServer()
+type BigDataServiceServer interface {
+	BigDataFunc(context.Context, *BigDataRequest) (*BigDataResponse, error)
+	mustEmbedUnimplementedBigDataServiceServer()
 }
 
-// UnimplementedBigDataserviceServer must be embedded to have forward compatible implementations.
-type UnimplementedBigDataserviceServer struct {
+// UnimplementedBigDataServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedBigDataServiceServer struct {
 }
 
-func (UnimplementedBigDataserviceServer) Bigdatafunc(context.Context, *BigDataRequest) (*BigDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Bigdatafunc not implemented")
+func (UnimplementedBigDataServiceServer) BigDataFunc(context.Context, *BigDataRequest) (*BigDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BigDataFunc not implemented")
 }
-func (UnimplementedBigDataserviceServer) mustEmbedUnimplementedBigDataserviceServer() {}
+func (UnimplementedBigDataServiceServer) mustEmbedUnimplementedBigDataServiceServer() {}
 
-// UnsafeBigDataserviceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BigDataserviceServer will
+// UnsafeBigDataServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BigDataServiceServer will
 // result in compilation errors.
-type UnsafeBigDataserviceServer interface {
-	mustEmbedUnimplementedBigDataserviceServer()
+type UnsafeBigDataServiceServer interface {
+	mustEmbedUnimplementedBigDataServiceServer()
 }
 
-func RegisterBigDataserviceServer(s grpc.ServiceRegistrar, srv BigDataserviceServer) {
-	s.RegisterService(&BigDataservice_ServiceDesc, srv)
+func RegisterBigDataServiceServer(s grpc.ServiceRegistrar, srv BigDataServiceServer) {
+	s.RegisterService(&BigDataService_ServiceDesc, srv)
 }
 
-func _BigDataservice_Bigdatafunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BigDataService_BigDataFunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BigDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BigDataserviceServer).Bigdatafunc(ctx, in)
+		return srv.(BigDataServiceServer).BigDataFunc(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/BigDataservice/bigdatafunc",
+		FullMethod: "/BigDataService/BigDataFunc",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BigDataserviceServer).Bigdatafunc(ctx, req.(*BigDataRequest))
+		return srv.(BigDataServiceServer).BigDataFunc(ctx, req.(*BigDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// BigDataservice_ServiceDesc is the grpc.ServiceDesc for BigDataservice service.
+// BigDataService_ServiceDesc is the grpc.ServiceDesc for BigDataService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var BigDataservice_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "BigDataservice",
-	HandlerType: (*BigDataserviceServer)(nil),
+var BigDataService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "BigDataService",
+	HandlerType: (*BigDataServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "bigdatafunc",
-			Handler:    _BigDataservice_Bigdatafunc_Handler,
+			MethodName: "BigDataFunc",
+			Handler:    _BigDataService_BigDataFunc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
