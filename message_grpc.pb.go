@@ -18,6 +18,92 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
+// TextserviceClient is the client API for Textservice service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TextserviceClient interface {
+	Textfunc(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*TextResponse, error)
+}
+
+type textserviceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTextserviceClient(cc grpc.ClientConnInterface) TextserviceClient {
+	return &textserviceClient{cc}
+}
+
+func (c *textserviceClient) Textfunc(ctx context.Context, in *TextRequest, opts ...grpc.CallOption) (*TextResponse, error) {
+	out := new(TextResponse)
+	err := c.cc.Invoke(ctx, "/Textservice/textfunc", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TextserviceServer is the server API for Textservice service.
+// All implementations must embed UnimplementedTextserviceServer
+// for forward compatibility
+type TextserviceServer interface {
+	Textfunc(context.Context, *TextRequest) (*TextResponse, error)
+	mustEmbedUnimplementedTextserviceServer()
+}
+
+// UnimplementedTextserviceServer must be embedded to have forward compatible implementations.
+type UnimplementedTextserviceServer struct {
+}
+
+func (UnimplementedTextserviceServer) Textfunc(context.Context, *TextRequest) (*TextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Textfunc not implemented")
+}
+func (UnimplementedTextserviceServer) mustEmbedUnimplementedTextserviceServer() {}
+
+// UnsafeTextserviceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TextserviceServer will
+// result in compilation errors.
+type UnsafeTextserviceServer interface {
+	mustEmbedUnimplementedTextserviceServer()
+}
+
+func RegisterTextserviceServer(s grpc.ServiceRegistrar, srv TextserviceServer) {
+	s.RegisterService(&Textservice_ServiceDesc, srv)
+}
+
+func _Textservice_Textfunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TextserviceServer).Textfunc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Textservice/textfunc",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TextserviceServer).Textfunc(ctx, req.(*TextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Textservice_ServiceDesc is the grpc.ServiceDesc for Textservice service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Textservice_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "Textservice",
+	HandlerType: (*TextserviceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "textfunc",
+			Handler:    _Textservice_Textfunc_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "message.proto",
+}
+
 // TexthandlerClient is the client API for Texthandler service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.

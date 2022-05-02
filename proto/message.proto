@@ -2,9 +2,18 @@ syntax="proto3";
 
 option go_package = "../pb";
 
-message Textmessage {
-  string textmessage = 1;
+message TextRequest {
+  string textreq = 1;
 }
+
+message TextResponse {
+  string textres = 1;
+}
+
+service Textservice {
+  rpc textfunc (TextRequest) returns (TextResponse) {}
+}
+
 
 message Request {
   string A = 1;
