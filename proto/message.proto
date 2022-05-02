@@ -25,3 +25,29 @@ message BytesResponse {
 service Bytesservice {
 	rpc bytesfunc(BytesRequest) returns (BytesResponse) {}
 }
+
+message RandomData {
+  string a = 1;
+  string b = 2;
+  string c = 3;
+  string d = 4;
+  string e = 5;
+  string f = 6;
+  string g = 7;
+}
+
+message BigData {
+  repeated RandomData item = 1;
+}
+
+message BigDataRequest {
+  BigData bigdatareq = 1;
+}
+
+message BigDataResponse {
+  string bigdatares = 1;
+}
+
+service BigDataservice {
+	rpc bigdatafunc(BigDataRequest) returns (BigDataResponse) {}
+}
