@@ -14,15 +14,14 @@ service Textservice {
   rpc textfunc(TextRequest) returns (TextResponse) {}
 }
 
-
-message Request {
-  string A = 1;
+message BytesRequest {
+  bytes bytesreq = 1;
 }
 
-message Response {
-  string B = 1;
+message BytesResponse {
+  bytes bytesres = 1;
 }
 
-service Texthandler {
-	rpc SayText(Request) returns (Response) {}
+service Bytesservice {
+	rpc bytesfunc(BytesRequest) returns (BytesResponse) {}
 }

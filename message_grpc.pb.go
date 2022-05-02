@@ -104,86 +104,86 @@ var Textservice_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "message.proto",
 }
 
-// TexthandlerClient is the client API for Texthandler service.
+// BytesserviceClient is the client API for Bytesservice service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TexthandlerClient interface {
-	SayText(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+type BytesserviceClient interface {
+	Bytesfunc(ctx context.Context, in *BytesRequest, opts ...grpc.CallOption) (*BytesResponse, error)
 }
 
-type texthandlerClient struct {
+type bytesserviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTexthandlerClient(cc grpc.ClientConnInterface) TexthandlerClient {
-	return &texthandlerClient{cc}
+func NewBytesserviceClient(cc grpc.ClientConnInterface) BytesserviceClient {
+	return &bytesserviceClient{cc}
 }
 
-func (c *texthandlerClient) SayText(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := c.cc.Invoke(ctx, "/Texthandler/SayText", in, out, opts...)
+func (c *bytesserviceClient) Bytesfunc(ctx context.Context, in *BytesRequest, opts ...grpc.CallOption) (*BytesResponse, error) {
+	out := new(BytesResponse)
+	err := c.cc.Invoke(ctx, "/Bytesservice/bytesfunc", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TexthandlerServer is the server API for Texthandler service.
-// All implementations must embed UnimplementedTexthandlerServer
+// BytesserviceServer is the server API for Bytesservice service.
+// All implementations must embed UnimplementedBytesserviceServer
 // for forward compatibility
-type TexthandlerServer interface {
-	SayText(context.Context, *Request) (*Response, error)
-	mustEmbedUnimplementedTexthandlerServer()
+type BytesserviceServer interface {
+	Bytesfunc(context.Context, *BytesRequest) (*BytesResponse, error)
+	mustEmbedUnimplementedBytesserviceServer()
 }
 
-// UnimplementedTexthandlerServer must be embedded to have forward compatible implementations.
-type UnimplementedTexthandlerServer struct {
+// UnimplementedBytesserviceServer must be embedded to have forward compatible implementations.
+type UnimplementedBytesserviceServer struct {
 }
 
-func (UnimplementedTexthandlerServer) SayText(context.Context, *Request) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayText not implemented")
+func (UnimplementedBytesserviceServer) Bytesfunc(context.Context, *BytesRequest) (*BytesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Bytesfunc not implemented")
 }
-func (UnimplementedTexthandlerServer) mustEmbedUnimplementedTexthandlerServer() {}
+func (UnimplementedBytesserviceServer) mustEmbedUnimplementedBytesserviceServer() {}
 
-// UnsafeTexthandlerServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TexthandlerServer will
+// UnsafeBytesserviceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BytesserviceServer will
 // result in compilation errors.
-type UnsafeTexthandlerServer interface {
-	mustEmbedUnimplementedTexthandlerServer()
+type UnsafeBytesserviceServer interface {
+	mustEmbedUnimplementedBytesserviceServer()
 }
 
-func RegisterTexthandlerServer(s grpc.ServiceRegistrar, srv TexthandlerServer) {
-	s.RegisterService(&Texthandler_ServiceDesc, srv)
+func RegisterBytesserviceServer(s grpc.ServiceRegistrar, srv BytesserviceServer) {
+	s.RegisterService(&Bytesservice_ServiceDesc, srv)
 }
 
-func _Texthandler_SayText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+func _Bytesservice_Bytesfunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BytesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TexthandlerServer).SayText(ctx, in)
+		return srv.(BytesserviceServer).Bytesfunc(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Texthandler/SayText",
+		FullMethod: "/Bytesservice/bytesfunc",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TexthandlerServer).SayText(ctx, req.(*Request))
+		return srv.(BytesserviceServer).Bytesfunc(ctx, req.(*BytesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Texthandler_ServiceDesc is the grpc.ServiceDesc for Texthandler service.
+// Bytesservice_ServiceDesc is the grpc.ServiceDesc for Bytesservice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Texthandler_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Texthandler",
-	HandlerType: (*TexthandlerServer)(nil),
+var Bytesservice_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "Bytesservice",
+	HandlerType: (*BytesserviceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayText",
-			Handler:    _Texthandler_SayText_Handler,
+			MethodName: "bytesfunc",
+			Handler:    _Bytesservice_Bytesfunc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
