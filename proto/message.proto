@@ -36,10 +36,6 @@ message RandomData {
   string g = 7;
 }
 
-// message BigData {
-//   repeated RandomData item = 1;
-// }
-
 message BigData {
   repeated RandomData content = 1;
 }
