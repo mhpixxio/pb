@@ -41,7 +41,7 @@ message RandomData {
 // }
 
 message BigData {
-  repeated RandomData Content = 1;
+  repeated RandomData content = 1;
 }
 
 message BigDataRequest {
