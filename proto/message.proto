@@ -36,8 +36,12 @@ message RandomData {
   string g = 7;
 }
 
+// message BigData {
+//   repeated RandomData item = 1;
+// }
+
 message BigData {
-  repeated RandomData item = 1;
+  repeated RandomData Content = 1;
 }
 
 message BigDataRequest {
