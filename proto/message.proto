@@ -41,11 +41,13 @@ message BigData {
 }
 
 message BigDataRequest {
-  BigData bigdatareq = 1;
+  string  info = 1;
+  BigData bigdatareq = 2;
 }
 
 message BigDataResponse {
-  string bigdatares = 1;
+  string info = 1;
+  BigData bigdatares = 2;
 }
 
 service BigDataService {
