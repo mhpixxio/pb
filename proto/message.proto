@@ -44,11 +44,13 @@ message BigDataRequest {
   string  info = 1;
   BigData bigdatareq = 2;
   bool  returnbigdata = 3;
+  bool returnsizeofrequest = 4;
 }
 
 message BigDataResponse {
   string info = 1;
   BigData bigdatares = 2;
+  int64 sizeofrequestres = 3;
 }
 
 service BigDataService {
