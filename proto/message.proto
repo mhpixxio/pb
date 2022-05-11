@@ -41,9 +41,8 @@ message BigData {
 }
 
 message BigDataRequest {
-  string  info = 1;
-  BigData bigdatareq = 2;
-  bool  returnbigdata = 3;
+  BigData bigdatareq = 1;
+  bool  returnbigdata = 2;
 }
 
 message BigDataResponse {
