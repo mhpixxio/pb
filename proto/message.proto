@@ -46,8 +46,7 @@ message BigDataRequest {
 }
 
 message BigDataResponse {
-  string info = 1;
-  BigData bigdatares = 2;
+  BigData bigdatares = 1;
 }
 
 service BigDataService {
