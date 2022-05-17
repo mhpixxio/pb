@@ -26,6 +26,33 @@ service BytesService {
 	rpc BytesFunc(BytesRequest) returns (BytesResponse) {}
 }
 
+message UploadRequest {
+  bytes filebytes = 1;
+  string filename = 2;
+}
+
+message UploadResponse {
+  BigData bigdatares = 1;
+}
+
+service UploadService {
+	rpc UploadFunc(UploadRequest) returns (UploadResponse) {}
+}
+
+message DownloadRequest {
+  string filename = 1;
+}
+
+message DownloadResponse {
+  bytes filebytes = 1;
+}
+
+service DownloadService {
+	rpc DownloadFunc(DownloadRequest) returns (DownloadResponse) {}
+}
+
+
+
 message RandomData {
   string a = 1;
   string b = 2;

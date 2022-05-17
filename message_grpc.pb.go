@@ -190,6 +190,178 @@ var BytesService_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "message.proto",
 }
 
+// UploadServiceClient is the client API for UploadService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type UploadServiceClient interface {
+	UploadFunc(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error)
+}
+
+type uploadServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewUploadServiceClient(cc grpc.ClientConnInterface) UploadServiceClient {
+	return &uploadServiceClient{cc}
+}
+
+func (c *uploadServiceClient) UploadFunc(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error) {
+	out := new(UploadResponse)
+	err := c.cc.Invoke(ctx, "/UploadService/UploadFunc", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UploadServiceServer is the server API for UploadService service.
+// All implementations must embed UnimplementedUploadServiceServer
+// for forward compatibility
+type UploadServiceServer interface {
+	UploadFunc(context.Context, *UploadRequest) (*UploadResponse, error)
+	mustEmbedUnimplementedUploadServiceServer()
+}
+
+// UnimplementedUploadServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUploadServiceServer struct {
+}
+
+func (UnimplementedUploadServiceServer) UploadFunc(context.Context, *UploadRequest) (*UploadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadFunc not implemented")
+}
+func (UnimplementedUploadServiceServer) mustEmbedUnimplementedUploadServiceServer() {}
+
+// UnsafeUploadServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UploadServiceServer will
+// result in compilation errors.
+type UnsafeUploadServiceServer interface {
+	mustEmbedUnimplementedUploadServiceServer()
+}
+
+func RegisterUploadServiceServer(s grpc.ServiceRegistrar, srv UploadServiceServer) {
+	s.RegisterService(&UploadService_ServiceDesc, srv)
+}
+
+func _UploadService_UploadFunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UploadServiceServer).UploadFunc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UploadService/UploadFunc",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UploadServiceServer).UploadFunc(ctx, req.(*UploadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// UploadService_ServiceDesc is the grpc.ServiceDesc for UploadService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UploadService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "UploadService",
+	HandlerType: (*UploadServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UploadFunc",
+			Handler:    _UploadService_UploadFunc_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "message.proto",
+}
+
+// DownloadServiceClient is the client API for DownloadService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type DownloadServiceClient interface {
+	DownloadFunc(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error)
+}
+
+type downloadServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewDownloadServiceClient(cc grpc.ClientConnInterface) DownloadServiceClient {
+	return &downloadServiceClient{cc}
+}
+
+func (c *downloadServiceClient) DownloadFunc(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error) {
+	out := new(DownloadResponse)
+	err := c.cc.Invoke(ctx, "/DownloadService/DownloadFunc", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DownloadServiceServer is the server API for DownloadService service.
+// All implementations must embed UnimplementedDownloadServiceServer
+// for forward compatibility
+type DownloadServiceServer interface {
+	DownloadFunc(context.Context, *DownloadRequest) (*DownloadResponse, error)
+	mustEmbedUnimplementedDownloadServiceServer()
+}
+
+// UnimplementedDownloadServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedDownloadServiceServer struct {
+}
+
+func (UnimplementedDownloadServiceServer) DownloadFunc(context.Context, *DownloadRequest) (*DownloadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DownloadFunc not implemented")
+}
+func (UnimplementedDownloadServiceServer) mustEmbedUnimplementedDownloadServiceServer() {}
+
+// UnsafeDownloadServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DownloadServiceServer will
+// result in compilation errors.
+type UnsafeDownloadServiceServer interface {
+	mustEmbedUnimplementedDownloadServiceServer()
+}
+
+func RegisterDownloadServiceServer(s grpc.ServiceRegistrar, srv DownloadServiceServer) {
+	s.RegisterService(&DownloadService_ServiceDesc, srv)
+}
+
+func _DownloadService_DownloadFunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DownloadServiceServer).DownloadFunc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/DownloadService/DownloadFunc",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DownloadServiceServer).DownloadFunc(ctx, req.(*DownloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// DownloadService_ServiceDesc is the grpc.ServiceDesc for DownloadService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var DownloadService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "DownloadService",
+	HandlerType: (*DownloadServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "DownloadFunc",
+			Handler:    _DownloadService_DownloadFunc_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "message.proto",
+}
+
 // BigDataServiceClient is the client API for BigDataService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
