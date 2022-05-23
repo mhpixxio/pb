@@ -51,16 +51,57 @@ service DownloadService {
 	rpc DownloadFunc(DownloadRequest) returns (DownloadResponse) {}
 }
 
-
-
 message RandomData {
-  string a = 1;
-  string b = 2;
-  string c = 3;
-  string d = 4;
-  string e = 5;
-  string f = 6;
-  string g = 7;
+  int32 aaabcdef = 1;
+  bool ababcdef = 2;
+  bool acabcdef = 3;
+  bool adabcdef = 4;
+  bool aeabcdef = 5;
+  bool afabcdef = 6;
+  bool agabcdef = 7;
+  bool ahabcdef = 8;
+  bool aiabcdef = 9;
+  bool ajabcdef = 10;
+  bool akabcdef = 11;
+  string alabcdef = 12;
+  string amabcdef = 13;
+  string anabcdef = 14;
+  string aoabcdef = 15;
+  string apabcdef = 16;
+  string aqabcdef = 17;
+  string arabcdef = 18;
+  string asabcdef = 19;
+  string atabcdef = 20;
+  string auabcdef = 21;
+  string avabcdef = 22;
+  string awabcdef = 23;
+  string axabcdef = 24;
+  string ayabcdef = 25;
+  string azabcdef = 26;
+  string baabcdef = 27;
+  string bbabcdef = 28;
+  string bcabcdef = 29;
+  string bdabcdef = 30;
+  string beabcdef = 31;
+  string bfabcdef = 32;
+  string bgabcdef = 33;
+  string bhabcdef = 34;
+  string biabcdef = 35;
+  string bjabcdef = 36;
+  string bkabcdef = 37;
+  string blabcdef = 38;
+  string bmabcdef = 39;
+  string bnabcdef = 40;
+  string boabcdef = 41;
+  string bpabcdef = 42;
+  string bqabcdef = 43;
+  string brabcdef = 44;
+  string bsabcdef = 45;
+  string btabcdef = 46;
+  string buabcdef = 47;
+  string bvabcdef = 48;
+  string bwabcdef = 49;
+  string bxabcdef = 50;
 }
 
 message BigData {
