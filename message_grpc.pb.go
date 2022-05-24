@@ -447,3 +447,117 @@ var BigDataService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "message.proto",
 }
+
+// ServerSideStreamingServiceClient is the client API for ServerSideStreamingService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type ServerSideStreamingServiceClient interface {
+	ServerSideStreamingFunc(ctx context.Context, in *StreamingRequest, opts ...grpc.CallOption) (ServerSideStreamingService_ServerSideStreamingFuncClient, error)
+}
+
+type serverSideStreamingServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewServerSideStreamingServiceClient(cc grpc.ClientConnInterface) ServerSideStreamingServiceClient {
+	return &serverSideStreamingServiceClient{cc}
+}
+
+func (c *serverSideStreamingServiceClient) ServerSideStreamingFunc(ctx context.Context, in *StreamingRequest, opts ...grpc.CallOption) (ServerSideStreamingService_ServerSideStreamingFuncClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ServerSideStreamingService_ServiceDesc.Streams[0], "/ServerSideStreamingService/ServerSideStreamingFunc", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &serverSideStreamingServiceServerSideStreamingFuncClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ServerSideStreamingService_ServerSideStreamingFuncClient interface {
+	Recv() (*BigDataResponse, error)
+	grpc.ClientStream
+}
+
+type serverSideStreamingServiceServerSideStreamingFuncClient struct {
+	grpc.ClientStream
+}
+
+func (x *serverSideStreamingServiceServerSideStreamingFuncClient) Recv() (*BigDataResponse, error) {
+	m := new(BigDataResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// ServerSideStreamingServiceServer is the server API for ServerSideStreamingService service.
+// All implementations must embed UnimplementedServerSideStreamingServiceServer
+// for forward compatibility
+type ServerSideStreamingServiceServer interface {
+	ServerSideStreamingFunc(*StreamingRequest, ServerSideStreamingService_ServerSideStreamingFuncServer) error
+	mustEmbedUnimplementedServerSideStreamingServiceServer()
+}
+
+// UnimplementedServerSideStreamingServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedServerSideStreamingServiceServer struct {
+}
+
+func (UnimplementedServerSideStreamingServiceServer) ServerSideStreamingFunc(*StreamingRequest, ServerSideStreamingService_ServerSideStreamingFuncServer) error {
+	return status.Errorf(codes.Unimplemented, "method ServerSideStreamingFunc not implemented")
+}
+func (UnimplementedServerSideStreamingServiceServer) mustEmbedUnimplementedServerSideStreamingServiceServer() {
+}
+
+// UnsafeServerSideStreamingServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServerSideStreamingServiceServer will
+// result in compilation errors.
+type UnsafeServerSideStreamingServiceServer interface {
+	mustEmbedUnimplementedServerSideStreamingServiceServer()
+}
+
+func RegisterServerSideStreamingServiceServer(s grpc.ServiceRegistrar, srv ServerSideStreamingServiceServer) {
+	s.RegisterService(&ServerSideStreamingService_ServiceDesc, srv)
+}
+
+func _ServerSideStreamingService_ServerSideStreamingFunc_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamingRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ServerSideStreamingServiceServer).ServerSideStreamingFunc(m, &serverSideStreamingServiceServerSideStreamingFuncServer{stream})
+}
+
+type ServerSideStreamingService_ServerSideStreamingFuncServer interface {
+	Send(*BigDataResponse) error
+	grpc.ServerStream
+}
+
+type serverSideStreamingServiceServerSideStreamingFuncServer struct {
+	grpc.ServerStream
+}
+
+func (x *serverSideStreamingServiceServerSideStreamingFuncServer) Send(m *BigDataResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+// ServerSideStreamingService_ServiceDesc is the grpc.ServiceDesc for ServerSideStreamingService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ServerSideStreamingService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "ServerSideStreamingService",
+	HandlerType: (*ServerSideStreamingServiceServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ServerSideStreamingFunc",
+			Handler:       _ServerSideStreamingService_ServerSideStreamingFunc_Handler,
+			ServerStreams: true,
+		},
+	},
+	Metadata: "message.proto",
+}

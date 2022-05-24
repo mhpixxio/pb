@@ -120,3 +120,12 @@ message BigDataResponse {
 service BigDataService {
 	rpc BigDataFunc(BigDataRequest) returns (BigDataResponse) {}
 }
+
+message StreamingRequest {
+  BigData bigdatareq = 1;
+  int32  streamingsize = 2;
+}
+
+service ServerSideStreamingService {
+  rpc ServerSideStreamingFunc(StreamingRequest) returns (stream BigDataResponse) {}
+}
