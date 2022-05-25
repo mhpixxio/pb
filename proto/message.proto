@@ -14,16 +14,12 @@ service TextService {
   rpc TextFunc(TextRequest) returns (TextResponse) {}
 }
 
-message BytesRequest {
-  bytes bytesreq = 1;
-}
-
-message BytesResponse {
-  bytes bytesres = 1;
+message Bytesmessage {
+  bytes bytesmes = 1;
 }
 
 service BytesService {
-	rpc BytesFunc(BytesRequest) returns (BytesResponse) {}
+	rpc BytesFunc(Bytesmessage) returns (Bytesmessage) {}
 }
 
 message UploadRequest {
@@ -123,9 +119,12 @@ service BigDataService {
 
 message StreamingRequest {
   BigData bigdatareq = 1;
-  int32  streamingsize = 2;
 }
 
 service ServerSideStreamingService {
-  rpc ServerSideStreamingFunc(StreamingRequest) returns (stream BigDataResponse) {}
+  rpc ServerSideStreamingFunc(StreamingRequest) returns (stream Bytesmessage) {}
+}
+
+service ClientSideStreamingService {
+  rpc ClientSideStreamingFunc(stream BigDataResponse) returns (BigDataResponse) {}
 }
