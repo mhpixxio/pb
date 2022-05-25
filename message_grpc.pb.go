@@ -452,7 +452,7 @@ var BigDataService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServerSideStreamingServiceClient interface {
-	ServerSideStreamingFunc(ctx context.Context, in *StreamingRequest, opts ...grpc.CallOption) (ServerSideStreamingService_ServerSideStreamingFuncClient, error)
+	ServerSideStreamingFunc(ctx context.Context, in *StreamingRequestServerSide, opts ...grpc.CallOption) (ServerSideStreamingService_ServerSideStreamingFuncClient, error)
 }
 
 type serverSideStreamingServiceClient struct {
@@ -463,7 +463,7 @@ func NewServerSideStreamingServiceClient(cc grpc.ClientConnInterface) ServerSide
 	return &serverSideStreamingServiceClient{cc}
 }
 
-func (c *serverSideStreamingServiceClient) ServerSideStreamingFunc(ctx context.Context, in *StreamingRequest, opts ...grpc.CallOption) (ServerSideStreamingService_ServerSideStreamingFuncClient, error) {
+func (c *serverSideStreamingServiceClient) ServerSideStreamingFunc(ctx context.Context, in *StreamingRequestServerSide, opts ...grpc.CallOption) (ServerSideStreamingService_ServerSideStreamingFuncClient, error) {
 	stream, err := c.cc.NewStream(ctx, &ServerSideStreamingService_ServiceDesc.Streams[0], "/ServerSideStreamingService/ServerSideStreamingFunc", opts...)
 	if err != nil {
 		return nil, err
@@ -499,7 +499,7 @@ func (x *serverSideStreamingServiceServerSideStreamingFuncClient) Recv() (*Bytes
 // All implementations must embed UnimplementedServerSideStreamingServiceServer
 // for forward compatibility
 type ServerSideStreamingServiceServer interface {
-	ServerSideStreamingFunc(*StreamingRequest, ServerSideStreamingService_ServerSideStreamingFuncServer) error
+	ServerSideStreamingFunc(*StreamingRequestServerSide, ServerSideStreamingService_ServerSideStreamingFuncServer) error
 	mustEmbedUnimplementedServerSideStreamingServiceServer()
 }
 
@@ -507,7 +507,7 @@ type ServerSideStreamingServiceServer interface {
 type UnimplementedServerSideStreamingServiceServer struct {
 }
 
-func (UnimplementedServerSideStreamingServiceServer) ServerSideStreamingFunc(*StreamingRequest, ServerSideStreamingService_ServerSideStreamingFuncServer) error {
+func (UnimplementedServerSideStreamingServiceServer) ServerSideStreamingFunc(*StreamingRequestServerSide, ServerSideStreamingService_ServerSideStreamingFuncServer) error {
 	return status.Errorf(codes.Unimplemented, "method ServerSideStreamingFunc not implemented")
 }
 func (UnimplementedServerSideStreamingServiceServer) mustEmbedUnimplementedServerSideStreamingServiceServer() {
@@ -525,7 +525,7 @@ func RegisterServerSideStreamingServiceServer(s grpc.ServiceRegistrar, srv Serve
 }
 
 func _ServerSideStreamingService_ServerSideStreamingFunc_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(StreamingRequest)
+	m := new(StreamingRequestServerSide)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -566,6 +566,7 @@ var ServerSideStreamingService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientSideStreamingServiceClient interface {
+	ClientSideStreamingFilenameFunc(ctx context.Context, in *StreamingRequestClientSide, opts ...grpc.CallOption) (*Successmessage, error)
 	ClientSideStreamingFunc(ctx context.Context, opts ...grpc.CallOption) (ClientSideStreamingService_ClientSideStreamingFuncClient, error)
 }
 
@@ -575,6 +576,15 @@ type clientSideStreamingServiceClient struct {
 
 func NewClientSideStreamingServiceClient(cc grpc.ClientConnInterface) ClientSideStreamingServiceClient {
 	return &clientSideStreamingServiceClient{cc}
+}
+
+func (c *clientSideStreamingServiceClient) ClientSideStreamingFilenameFunc(ctx context.Context, in *StreamingRequestClientSide, opts ...grpc.CallOption) (*Successmessage, error) {
+	out := new(Successmessage)
+	err := c.cc.Invoke(ctx, "/ClientSideStreamingService/ClientSideStreamingFilenameFunc", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *clientSideStreamingServiceClient) ClientSideStreamingFunc(ctx context.Context, opts ...grpc.CallOption) (ClientSideStreamingService_ClientSideStreamingFuncClient, error) {
@@ -587,8 +597,8 @@ func (c *clientSideStreamingServiceClient) ClientSideStreamingFunc(ctx context.C
 }
 
 type ClientSideStreamingService_ClientSideStreamingFuncClient interface {
-	Send(*BigDataResponse) error
-	CloseAndRecv() (*BigDataResponse, error)
+	Send(*Bytesmessage) error
+	CloseAndRecv() (*Successmessage, error)
 	grpc.ClientStream
 }
 
@@ -596,15 +606,15 @@ type clientSideStreamingServiceClientSideStreamingFuncClient struct {
 	grpc.ClientStream
 }
 
-func (x *clientSideStreamingServiceClientSideStreamingFuncClient) Send(m *BigDataResponse) error {
+func (x *clientSideStreamingServiceClientSideStreamingFuncClient) Send(m *Bytesmessage) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *clientSideStreamingServiceClientSideStreamingFuncClient) CloseAndRecv() (*BigDataResponse, error) {
+func (x *clientSideStreamingServiceClientSideStreamingFuncClient) CloseAndRecv() (*Successmessage, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(BigDataResponse)
+	m := new(Successmessage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -615,6 +625,7 @@ func (x *clientSideStreamingServiceClientSideStreamingFuncClient) CloseAndRecv()
 // All implementations must embed UnimplementedClientSideStreamingServiceServer
 // for forward compatibility
 type ClientSideStreamingServiceServer interface {
+	ClientSideStreamingFilenameFunc(context.Context, *StreamingRequestClientSide) (*Successmessage, error)
 	ClientSideStreamingFunc(ClientSideStreamingService_ClientSideStreamingFuncServer) error
 	mustEmbedUnimplementedClientSideStreamingServiceServer()
 }
@@ -623,6 +634,9 @@ type ClientSideStreamingServiceServer interface {
 type UnimplementedClientSideStreamingServiceServer struct {
 }
 
+func (UnimplementedClientSideStreamingServiceServer) ClientSideStreamingFilenameFunc(context.Context, *StreamingRequestClientSide) (*Successmessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientSideStreamingFilenameFunc not implemented")
+}
 func (UnimplementedClientSideStreamingServiceServer) ClientSideStreamingFunc(ClientSideStreamingService_ClientSideStreamingFuncServer) error {
 	return status.Errorf(codes.Unimplemented, "method ClientSideStreamingFunc not implemented")
 }
@@ -640,13 +654,31 @@ func RegisterClientSideStreamingServiceServer(s grpc.ServiceRegistrar, srv Clien
 	s.RegisterService(&ClientSideStreamingService_ServiceDesc, srv)
 }
 
+func _ClientSideStreamingService_ClientSideStreamingFilenameFunc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StreamingRequestClientSide)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientSideStreamingServiceServer).ClientSideStreamingFilenameFunc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ClientSideStreamingService/ClientSideStreamingFilenameFunc",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientSideStreamingServiceServer).ClientSideStreamingFilenameFunc(ctx, req.(*StreamingRequestClientSide))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ClientSideStreamingService_ClientSideStreamingFunc_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(ClientSideStreamingServiceServer).ClientSideStreamingFunc(&clientSideStreamingServiceClientSideStreamingFuncServer{stream})
 }
 
 type ClientSideStreamingService_ClientSideStreamingFuncServer interface {
-	SendAndClose(*BigDataResponse) error
-	Recv() (*BigDataResponse, error)
+	SendAndClose(*Successmessage) error
+	Recv() (*Bytesmessage, error)
 	grpc.ServerStream
 }
 
@@ -654,12 +686,12 @@ type clientSideStreamingServiceClientSideStreamingFuncServer struct {
 	grpc.ServerStream
 }
 
-func (x *clientSideStreamingServiceClientSideStreamingFuncServer) SendAndClose(m *BigDataResponse) error {
+func (x *clientSideStreamingServiceClientSideStreamingFuncServer) SendAndClose(m *Successmessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *clientSideStreamingServiceClientSideStreamingFuncServer) Recv() (*BigDataResponse, error) {
-	m := new(BigDataResponse)
+func (x *clientSideStreamingServiceClientSideStreamingFuncServer) Recv() (*Bytesmessage, error) {
+	m := new(Bytesmessage)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -672,7 +704,12 @@ func (x *clientSideStreamingServiceClientSideStreamingFuncServer) Recv() (*BigDa
 var ClientSideStreamingService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "ClientSideStreamingService",
 	HandlerType: (*ClientSideStreamingServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ClientSideStreamingFilenameFunc",
+			Handler:    _ClientSideStreamingService_ClientSideStreamingFilenameFunc_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ClientSideStreamingFunc",

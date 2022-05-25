@@ -117,14 +117,24 @@ service BigDataService {
 	rpc BigDataFunc(BigDataRequest) returns (BigDataResponse) {}
 }
 
-message StreamingRequest {
-  BigData bigdatareq = 1;
+message StreamingRequestServerSide {
+  string filename = 1;
+  int32 buffersize = 2;
+}
+
+message StreamingRequestClientSide {
+  string filename = 1;
+}
+
+message Successmessage {
+  bool successmes = 1;
 }
 
 service ServerSideStreamingService {
-  rpc ServerSideStreamingFunc(StreamingRequest) returns (stream Bytesmessage) {}
+  rpc ServerSideStreamingFunc(StreamingRequestServerSide) returns (stream Bytesmessage) {}
 }
 
 service ClientSideStreamingService {
-  rpc ClientSideStreamingFunc(stream BigDataResponse) returns (BigDataResponse) {}
+  rpc ClientSideStreamingFilenameFunc(StreamingRequestClientSide) returns (Successmessage) {}
+  rpc ClientSideStreamingFunc(stream Bytesmessage) returns (Successmessage) {}
 }
